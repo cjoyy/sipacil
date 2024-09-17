@@ -1,8 +1,8 @@
 # sipacil
-## Nama  : Calvin Joy Tarigans
-## NPM   : 2306244974
-## Kelas : PBP C
-## Link  : http://calvin-joy-sipacil.pbp.cs.ui.ac.id/
+### Nama  : Calvin Joy Tarigan
+### NPM   : 2306244974
+### Kelas : PBP C
+### Link  : http://calvin-joy-sipacil.pbp.cs.ui.ac.id/
 ---
 
 # Tugas 3: Implementasi Form dan Data Delivery pada Django
@@ -20,6 +20,7 @@
 4. csrf_token digunakan untuk melindungi aplikasi dari serangan CSRF (Cross-Site Request Forgery). Jika kita tidak menambahkan csrf_token, penyerang dapat mengirimkan permintaan palsu dari situs lain yang seolah-olah berasal dari pengguna yang sah, sehingga memungkinkan penyerang untuk melakukan aksi seperti mengubah data atau melakukan transaksi tanpa sepengetahuan pengguna. Dengan csrf_token, setiap permintaan form harus mengandung token yang hanya valid untuk sesi pengguna tersebut, sehingga serangan CSRF bisa dicegah.
 
 5. Cara saya mengimplementasikan checklist step-by-step,
+
 a. Buat Skeleton Views
 - Buat direktori templates dan file base.html.
 - Gunakan {% block %} di base.html untuk membuat kerangka umum yang bisa di-extend.
@@ -30,8 +31,10 @@ b. Ubah Primary Key menjadi UUID
 - Tambahkan baris id = models.UUIDField() di models.py untuk mengganti ID menjadi UUID.
 - Jika sudah ada data, hapus database lama (db.sqlite3).
 - Jalankan perintah migrasi:
+```
 python manage.py makemigrations
 python manage.py migrate
+```
 
 c. Buat Form Input Data
 - Buat file forms.py di direktori main dan tambahkan form model ProductEntryForm.
@@ -42,14 +45,18 @@ c. Buat Form Input Data
 d. Tampilkan Data dalam Format XML dan JSON
 - Tambahkan fungsi show_xml dan show_json di views.py untuk menampilkan data dalam format XML dan JSON menggunakan serializers.
 - Buat path URL untuk masing-masing format di urls.py:
+```
 path('xml/', show_xml, name='show_xml'),
 path('json/', show_json, name='show_json')
+```
 
 e. Tampilkan Data Berdasarkan ID dalam Format XML dan JSON
 - Tambahkan fungsi show_xml_by_id dan show_json_by_id di views.py untuk menampilkan data berdasarkan ID.
 - Buat path URL untuk mengakses data berdasarkan ID di urls.py:
+```
 path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
 path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+```
 
 f. Tes dengan Postman
 - Jalankan server Django dengan perintah python manage.py runserver.
@@ -65,8 +72,10 @@ g. Push Otomatis ke PWS Menggunakan GitHub Actions:
 - Membuat Secret di GitHub:
 Pergi ke Settings > Secrets and variables > Actions.
 Isi Secret dengan format,
+```
 Name : PWS_URL
 Secret : https://<username>:<password>@pbp.cs.ui.ac.id/<username>/<proyek>
+```
 - Update settings.py, tambahkan CSRF_TRUSTED_ORIGINS = ["https://<URL_PWS_KAMU>"]
   
 h. Git Push:
