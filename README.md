@@ -23,7 +23,7 @@ Perbedaan utamanya adalah `redirect()` lebih fleksibel dan merupakan shorthand u
 from django.contrib.auth.models import User
 ...
 class MoodEntry(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE) # # Penghubung dengan model User
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # Penghubung dengan model User
     ...
 ```
 
