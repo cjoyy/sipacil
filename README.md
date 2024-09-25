@@ -5,6 +5,90 @@
 ### Link  : http://calvin-joy-sipacil.pbp.cs.ui.ac.id/
 ---
 
+# Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django
+
+<details>
+<summary>Click for more detail</summary>
+<br>
+
+1. Perbedaan antara `HttpResponseRedirect()` dan `redirect()`:
+- `HttpResponseRedirect()`: Class yang digunakan untuk mengarahkan pengguna ke URL lain. Dalam penggunaannya, kita harus secara manual memberikan URL tujuan sebagai argumen.
+- `redirect()`: Shortcut yang disediakan oleh Django untuk mempermudah pembuatan `HttpResponseRedirect`. Fungsi ini bisa menerima argumen berupa URL, nama view, atau object model.
+Perbedaan utamanya adalah `redirect()` lebih fleksibel dan merupakan shorthand untuk `HttpResponseRedirect`.
+
+2. Untuk menghubungkan model Product dengan User, biasanya digunakan relasi ForeignKey atau ManyToManyField. ForeignKey digunakan jika setiap produk hanya dimiliki oleh satu pengguna, sedangkan ManyToManyField digunakan jika sebuah produk bisa dimiliki oleh banyak pengguna, dan setiap pengguna juga bisa memiliki banyak produk. Dengan ForeignKey, setiap objek di model Product terhubung ke satu pengguna saja, menunjukkan hubungan satu-ke-banyak. Sebaliknya, ManyToManyField memungkinkan hubungan banyak-ke-banyak, di mana satu produk dapat dimiliki oleh banyak pengguna, dan setiap pengguna dapat memiliki banyak produk.
+```python
+# Implementasi pada models.py yang ada pada subdirektori main
+...
+from django.contrib.auth.models import User
+...
+class MoodEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # # Penghubung dengan model User
+    ...
+```
+
+3. Perbedaan antara authentication dan authorization:
+- Authentication: Proses verifikasi identitas pengguna (misalnya, apakah username dan password benar?). Ini terjadi ketika pengguna login.
+- Authorization: Setelah pengguna terautentikasi, authorization menentukan hak akses pengguna terhadap sumber daya tertentu (misalnya, apakah pengguna ini boleh mengakses halaman admin?).
+
+Implementasi di Django:
+- Authentication: Django menggunakan `django.contrib.auth` untuk mengautentikasi pengguna. Ketika pengguna memasukkan kredensial mereka, Django memverifikasi melalui model User. Jika kredensial cocok, pengguna dianggap terautentikasi.
+- Authorization: Django menyediakan decorators seperti `@login_required` dan permission system untuk mengontrol akses ke views tertentu berdasarkan status autentikasi atau hak akses pengguna.
+
+4. Django menggunakan session untuk mengingat pengguna yang telah login. Saat pengguna berhasil login, Django menyimpan session ID pengguna dalam sebuah cookie di browser. Informasi detail mengenai pengguna disimpan di server dalam database session.
+
+Cookies adalah file kecil yang disimpan di browser pengguna, digunakan untuk menyimpan data sesi, preferensi pengguna, dll.
+Cookies juga dapat digunakan untuk menyimpan preferensi bahasa, keranjang belanja, atau untuk tracking analitik.
+Tidak semua cookies aman. Beberapa cookies (seperti cookies yang digunakan untuk login session) harus ditandai dengan flag HttpOnly dan Secure untuk mencegah akses dari JavaScript dan memastikan hanya dikirim melalui koneksi HTTPS.
+
+5. Cara saya mengimplementasikan checklist step-by-step,
+
+a. Membuat Fungsi Registrasi:
+- Impor `UserCreationForm` dan `messages` di views.py.
+- Tambahkan fungsi `register()` untuk menangani pembuatan akun pengguna. Fungsi ini menggunakan `UserCreationForm` untuk menampilkan dan memvalidasi form registrasi.
+- Jika form valid, data pengguna disimpan, dan pesan sukses ditampilkan menggunakan messages.success. Pengguna kemudian diarahkan ke halaman login setelah registrasi berhasil.
+
+b. Membuat Template HTML untuk Registrasi:
+Buat file register.html yang memuat form pendaftaran dengan menggunakan `{{ form.as_table }}` untuk menampilkan form dalam bentuk tabel. Pastikan juga untuk menyertakan CSRF token untuk keamanan.
+
+c. Menghubungkan Fungsi ke URL:
+Di urls.py, impor fungsi `register()` dan tambahkan ke dalam urlpatterns untuk menghubungkan URL /register/ dengan fungsi registrasi.
+
+d. Membuat Fungsi Login:
+- Impor AuthenticationForm, authenticate, dan login di views.py.
+- Tambahkan fungsi `login_user()` untuk menangani autentikasi pengguna. Fungsi ini mengecek apakah form login valid dan melakukan login jika data benar.
+- Setelah berhasil login, pengguna diarahkan ke halaman utama (main).
+
+e. Membuat Template HTML untuk Login:
+Buat file login.html untuk menampilkan form login. Tambahkan juga link ke halaman registrasi jika pengguna belum memiliki akun.
+
+f. Menghubungkan Login ke URL:
+Di urls.py, impor fungsi login_user() dan tambahkan URL /login/ ke dalam urlpatterns.
+
+g. Menambahkan Logout dan Restriksi Akses:
+- Tambahkan fungsi `logout_user()` di views.py untuk menghapus sesi pengguna dan mengarahkan mereka kembali ke halaman login setelah logout.
+- Gunakan dekorator  `@login_required` pada fungsi show_main() untuk membatasi akses hanya kepada pengguna yang sudah login.
+
+h. Menambahkan Fitur Cookies untuk Last Login:
+- Pada fungsi `login_user()`, tambahkan cookie last_login setelah login berhasil menggunakan response.set_cookie(). Di halaman utama, cookie ini ditampilkan untuk menunjukkan kapan terakhir kali pengguna login.
+- Pada fungsi logout, hapus cookie last_login menggunakan `response.delete_cookie()`.
+
+i. Menghubungkan Model MoodEntry dengan User:
+- Tambahkan ForeignKey ke model MoodEntry untuk mengaitkan mood entry dengan pengguna yang membuatnya. Gunakan request.user untuk menetapkan pengguna saat mood entry disimpan.
+- Ubah query di fungsi show_main() untuk hanya menampilkan mood entries milik pengguna yang sedang login dengan memfilter berdasarkan user=request.user.
+
+j. Menerapkan Migrasi:
+Jalankan `python manage.py makemigrations` dan `python manage.py migrate` untuk menerapkan perubahan model ke database, termasuk penambahan relasi ForeignKey.
+
+k. Git Push:
+- Lakukan git add, git commit, dan git push ke GitHub.
+- GitHub Actions akan otomatis push ke PWS.
+
+
+</details>
+
+---
+
 # Tugas 3: Implementasi Form dan Data Delivery pada Django
 
 <details>
