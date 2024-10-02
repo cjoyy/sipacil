@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
-from main.forms import ProductEntryForm
-from main.models import ProductEntry
-from django.http import HttpResponse
-from django.core import serializers
-from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import render, redirect, reverse  # Tambahkan import redirect di baris ini
+from main.forms import ProductEntryForm
+from main.models import ProductEntry
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core import serializers
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def delete_product(request, id):
     # Get product berdasarkan id
