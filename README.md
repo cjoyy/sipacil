@@ -5,6 +5,120 @@
 ### Link  : http://calvin-joy-sipacil.pbp.cs.ui.ac.id/
 ---
 
+# Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS
+
+<details>
+<summary>Click for more detail</summary>
+<br>
+
+## 1.  Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+- Inline CSS: CSS yang didefinisikan langsung pada elemen menggunakan atribut style memiliki prioritas tertinggi.
+
+- ID Selector (#id) memiliki tingkat prioritas tertinggi di antara selector lainnya yang ada di dalam file CSS.
+
+- Class, Attribute, dan Pseudo-class Selector (.class, [attribute], :hover) memiliki prioritas di bawah ID selector.
+
+- Tag (Type) Selector (div, p, a) memiliki prioritas paling rendah.
+
+- Universal Selector (*) dan kombinasi atau group selector biasanya memiliki prioritas paling rendah.
+
+- !important: Deklarasi ini mengesampingkan semua aturan di atas, tetapi penggunaannya sebaiknya dihindari karena dapat menyulitkan debugging dan pemeliharaan kode.
+
+Urutan prioritas dihitung berdasarkan kehadiran tipe selector (ID, class, atau tag) di dalam satu rule CSS. Jika dua selector memiliki tingkat spesifisitas yang sama, maka yang muncul terakhir dalam file CSS akan diterapkan.
+ 
+## 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Responsive design sangat penting karena memungkinkan aplikasi web beradaptasi dengan berbagai ukuran layar dan perangkat, seperti smartphone, tablet, dan desktop. Ini meningkatkan user experience, memastikan navigasi yang mudah, dan mengoptimalkan SEO, karena mesin pencari seperti Google memprioritaskan situs yang mobile-friendly.
+
+- Contoh aplikasi yang sudah menerapkan responsive design:
+
+Twitter: Desain yang fleksibel dan menyesuaikan tampilan dengan berbagai ukuran layar.
+
+- Contoh aplikasi yang belum menerapkan responsive design:
+
+Craigslist: Tampilan kaku dan sulit diakses dari perangkat mobile, mengharuskan pengguna untuk zoom atau scroll horizontal.
+
+## 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+- Margin: Ruang kosong di luar elemen, yang memisahkan elemen dari elemen lain. Margin tidak mempengaruhi ukuran elemen itu sendiri.
+
+- Border: Garis yang mengelilingi elemen, yang berada di antara margin dan padding. Border dapat diatur ketebalan, warna, dan gayanya.
+
+- Padding: Ruang kosong di dalam elemen, antara konten elemen dan border. Padding menambah ruang di dalam elemen tanpa mempengaruhi margin.
+
+Margin, border, dan padding adalah bagian penting dalam mengatur jarak dan tampilan elemen pada halaman web. Margin menambahkan jarak di luar elemen, border adalah garis yang membungkus elemen, dan padding menambah ruang di dalam elemen antara konten dan border. 
+
+Implementasi
+```
+div {
+  margin: 20px; /* Menambah ruang di luar elemen */
+  border: 2px solid black; /* Border hitam dengan ketebalan 2px */
+  padding: 10px; /* Menambah ruang di dalam elemen, antara konten dan border */
+}
+```
+
+## 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+
+Flexbox dan Grid Layout adalah dua teknik dalam CSS yang digunakan untuk mengatur tata letak elemen di halaman web, masing-masing dengan karakteristik dan kegunaan yang berbeda.
+
+- Flex box adalah metode tata letak yang dirancang untuk satu dimensi (baik kolom atau baris) dan digunakan untuk mengatur elemen di sepanjang satu sumbu utama (horizontal atau vertikal). 
+
+  Flex box berguna untuk mengatur elemen secara rapi dalam satu baris atau kolom. Cocok untuk tata letak yang lebih sederhana, seperti menyejajarkan item secara horizontal atau vertikal, dan mudah untuk membuat tampilan responsif. Contoh Implementasi Flexbox:
+```
+.container {
+  display: flex; 
+  justify-content: center; /* Pusatkan elemen secara horizontal */
+  align-items: center; /* Pusatkan elemen secara vertikal */
+}
+```
+
+- Grid Layout adalah sistem tata letak dua dimensi yang memungkinkan penempatan elemen di dalam baris dan kolom. Berbeda dengan Flexbox yang bekerja pada satu dimensi, Grid Layout memungkinkan pengaturan elemen secara lebih kompleks dalam dua arah (horizontal dan vertikal).
+
+  Grid Layout berguna untuk mengatur elemen dalam baris dan kolom sekaligus. Cocok untuk tata letak yang lebih kompleks, seperti halaman dengan banyak elemen, dan memberikan lebih banyak kontrol dalam membuat tata letak yang terstruktur.
+Contoh Implementasi Grid Layout:
+```
+.container {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; /* Membuat dua kolom dengan ukuran yang sama */
+  grid-gap: 10px; /* Menambahkan jarak antar kolom */
+}
+```
+ 
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+a. Tambahkan Meta Viewport untuk Responsivitas:
+- Tambahkan tag meta viewport di dalam tag `<head>`.
+- Sesuaikan pengaturan viewport untuk mendukung tampilan responsif.
+
+b. Integrasikan Tailwind CSS:
+- Tambahkan script CDN Tailwind di bagian `<head>`.
+- Pastikan CDN dihubungkan dengan benar untuk menggunakan class Tailwind.
+
+c. Buat Navbar dengan Tailwind:
+- Buat file navbar.html dengan struktur HTML menggunakan class Tailwind.
+- Sertakan navbar di halaman seperti main.html, edit_product.html, dan create_product_entry.html dengan {% include 'navbar.html' %}.
+
+d. Buat Fitur Edit (Update):
+- Tambahkan fungsi edit_product di views.py untuk menangani edit data.
+- Buat form di edit_product.html dengan metode POST untuk menyimpan perubahan.
+- Tambahkan URL path untuk edit di urls.py.
+- Tambahkan tombol "Edit" di main.html untuk setiap product entry.
+
+e. Buat Fitur Hapus (Delete):
+- Tambahkan fungsi delete_product di views.py untuk menghapus data.
+- Tambahkan URL path untuk delete di urls.py.
+- Tambahkan tombol "Delete" di main.html untuk setiap product entry.
+
+f. Testing:
+- Jalankan aplikasi dengan python manage.py runserver.
+- Uji fitur edit dan delete untuk memastikan berfungsi tanpa error.
+
+g. Git Push:
+- Lakukan git add, git commit, dan git push ke GitHub.
+- GitHub Actions akan otomatis push ke PWS.
+
+</details>
+
+---
+
 # Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django
 
 <details>
@@ -22,7 +136,7 @@ Perbedaan utamanya adalah `redirect()` lebih fleksibel dan merupakan shorthand u
 ...
 from django.contrib.auth.models import User
 ...
-class MoodEntry(models.Model):
+class ProductEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) # Penghubung dengan model User
     ...
 ```
@@ -73,9 +187,9 @@ h. Menambahkan Fitur Cookies untuk Last Login:
 - Pada fungsi `login_user()`, tambahkan cookie last_login setelah login berhasil menggunakan response.set_cookie(). Di halaman utama, cookie ini ditampilkan untuk menunjukkan kapan terakhir kali pengguna login.
 - Pada fungsi logout, hapus cookie last_login menggunakan `response.delete_cookie()`.
 
-i. Menghubungkan Model MoodEntry dengan User:
-- Tambahkan ForeignKey ke model MoodEntry untuk mengaitkan mood entry dengan pengguna yang membuatnya. Gunakan request.user untuk menetapkan pengguna saat mood entry disimpan.
-- Ubah query di fungsi show_main() untuk hanya menampilkan mood entries milik pengguna yang sedang login dengan memfilter berdasarkan user=request.user.
+i. Menghubungkan Model ProductEntry dengan User:
+- Tambahkan ForeignKey ke model ProductEntry untuk mengaitkan product entry dengan pengguna yang membuatnya. Gunakan request.user untuk menetapkan pengguna saat product entry disimpan.
+- Ubah query di fungsi show_main() untuk hanya menampilkan product entries milik pengguna yang sedang login dengan memfilter berdasarkan user=request.user.
 
 j. Menerapkan Migrasi:
 Jalankan `python manage.py makemigrations` dan `python manage.py migrate` untuk menerapkan perubahan model ke database, termasuk penambahan relasi ForeignKey.
