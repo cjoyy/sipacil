@@ -1,16 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
 {% block meta %}
 <title>Login</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center w-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
+<div class="min-h-screen flex items-center justify-center w-screen bg-gradient-to-r from-blue-700 to-red-600 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white shadow-2xl rounded-lg p-10 space-y-8">
     <div>
-      <h2 class="mt-6 text-center text-black text-3xl font-extrabold text-gray-900">
-        Login to your account
+      <h2 class="mt-6 text-center text-gray-800 text-4xl font-extrabold">
+        SIPACIL
       </h2>
+      <p class="mt-2 text-center text-gray-600">Please enter your credentials to login.</p>
     </div>
     <form class="mt-8 space-y-6" method="POST" action="">
       {% csrf_token %}
@@ -18,16 +19,21 @@
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
           <label for="username" class="sr-only">Username</label>
-          <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
+          <input id="username" name="username" type="text" required class="appearance-none rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="Username">
         </div>
-        <div>
+        <div class="relative">
           <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+          <input id="password" name="password" type="password" required class="appearance-none rounded-md relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="Password">
+          <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <svg id="eyeIcon" class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.956 10.956 0 0012 19c-6.627 0-12-5.373-12-12 0-1.285.214-2.523.588-3.693M21.412 9.293A10.956 10.956 0 0012 4c-1.285 0-2.523.214-3.693.588M15 12l-3-3m0 0l-3 3m3-3v6" />
+            </svg>
+          </button>
         </div>
       </div>
 
       <div>
-        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 transition duration-300">
           Sign in
         </button>
       </div>
@@ -54,13 +60,30 @@
     {% endif %}
 
     <div class="text-center mt-4">
-      <p class="text-sm text-black">
+      <p class="text-sm text-gray-700">
         Don't have an account yet?
-        <a href="{% url 'main:register' %}" class="font-medium text-indigo-200 hover:text-indigo-300">
+        <a href="{% url 'main:register' %}" class="font-medium text-blue-600 hover:text-blue-500">
           Register Now
         </a>
       </p>
     </div>
   </div>
 </div>
+
+<!-- Script untuk toggle password visibility -->
+<script>
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+  const eyeIcon = document.getElementById('eyeIcon');
+
+  togglePassword.addEventListener('click', function () {
+    // Toggle the type attribute
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Toggle the eye icon
+    eyeIcon.classList.toggle('text-gray-500');
+    eyeIcon.classList.toggle('text-blue-500');
+  });
+</script>
 {% endblock content %}
