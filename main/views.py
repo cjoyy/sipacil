@@ -19,12 +19,15 @@ from django.utils.html import strip_tags
 def add_product_entry_ajax(request):
     product = strip_tags(request.POST.get("product"))
     description = strip_tags(request.POST.get("description"))
-    rating = request.POST.get("rating")
+    price = strip_tags(request.POST.get("price"))
+    rating = strip_tags(request.POST.get("rating"))
+    date = strip_tags(request.POST.get("date"))
+    available = strip_tags(request.POST.get("available"))
     user = request.user
 
     new_product = ProductEntry(
         product=product, description=description,
-        rating=rating,
+        price=price, rating=rating, date=date, available=available, 
         user=user
     )
     new_product.save()
