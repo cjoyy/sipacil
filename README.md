@@ -5,6 +5,72 @@
 ### Link  : http://calvin-joy-sipacil.pbp.cs.ui.ac.id/
 ---
 
+# Tugas 6: JavaScript dan AJAX
+
+<details>
+<summary>Click for more detail</summary>
+<br>
+
+## 1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+JavaScript memungkinkan interaksi dinamis di halaman web, seperti validasi input, pembaruan konten tanpa memuat ulang halaman (AJAX), dan animasi. Ini meningkatkan pengalaman pengguna (UX) dan mempercepat performa aplikasi dengan mengurangi permintaan server.
+
+## 2. Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()`! Apa yang akan terjadi jika kita tidak menggunakan `await`?
+`await` pada `fetch()` menunda eksekusi hingga proses `fetch()` selesai, sehingga kita dapat bekerja dengan respons yang sudah tersedia. Tanpa `await`, kode akan terus berjalan tanpa menunggu hasil `fetch()`, yang bisa menyebabkan akses data sebelum respons diterima (berupa `Promise` yang belum diselesaikan).
+
+## 3. Mengapa kita perlu menggunakan decorator `csrf_exempt` pada view yang akan digunakan untuk AJAX POST?
+`csrf_exempt` digunakan untuk menonaktifkan perlindungan CSRF pada view, memungkinkan permintaan AJAX POST dari sumber yang valid tapi tanpa token CSRF. Ini berguna ketika AJAX POST berasal dari sumber eksternal atau jika validasi CSRF tidak diperlukan.
+
+## 4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Pembersihan di backend diperlukan untuk mencegah manipulasi data dari sisi pengguna, seperti serangan injeksi atau bypass validasi di frontend. Dengan melakukan validasi di backend, kita memastikan keamanan dan integritas data meskipun pengguna mencoba mengubah logika di sisi klien (frontend).
+
+## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+1. **Menambahkan Pesan Error pada Login**:
+   - Pada `views.py`, tambahkan validasi untuk memeriksa apakah form login valid.
+   - Jika gagal, gunakan `messages.error` untuk menampilkan pesan error di halaman login.
+   - Di template `login.html`, tampilkan pesan error dengan menggunakan `{{ messages }}`.
+
+2. **Membuat Fungsi AJAX untuk Menambahkan Data**:
+   - Buat fungsi view di `views.py` yang menerima data dari form melalui metode POST.
+   - Gunakan decorator `@csrf_exempt` agar tidak perlu validasi CSRF token.
+   - Buat objek baru berdasarkan data yang diterima dan simpan ke database.
+   - Kembalikan respons HTTP dengan status 201 jika berhasil.
+
+3. **Menambahkan Routing untuk AJAX**:
+   - Di `urls.py`, buat path baru yang mengarahkan ke fungsi view AJAX.
+   - Pastikan path ini bisa diakses hanya dengan metode POST.
+
+4. **Menampilkan Data dengan fetch API**:
+   - Buat fungsi JavaScript di template untuk mengambil data dari endpoint JSON.
+   - Gunakan `fetch()` untuk mengambil data secara asynchronous.
+   - Gunakan JavaScript untuk memanipulasi DOM dan menampilkan data di halaman tanpa perlu reload.
+
+5. **Membuat Modal dengan Tailwind CSS**:
+   - Tambahkan modal menggunakan komponen Tailwind di HTML.
+   - Buat fungsi JavaScript untuk menampilkan dan menyembunyikan modal.
+
+6. **Menambahkan Data dengan AJAX**:
+   - Buat fungsi JavaScript untuk mengirim data form menggunakan `fetch()` dan metode POST.
+   - Setelah berhasil, refresh data di halaman tanpa reload.
+
+7. **Melindungi dari XSS**:
+   - Gunakan fungsi `strip_tags` di backend untuk membersihkan input dari tag HTML berbahaya sebelum menyimpannya ke database.
+   - Tambahkan validasi tambahan di form untuk membersihkan data input dari tag HTML.
+
+8. **Membersihkan Data Lama dengan DOMPurify**:
+   - Tambahkan DOMPurify di frontend untuk membersihkan data lama yang mungkin masih terinfeksi XSS ketika ditampilkan di halaman.
+
+9. **Testing**:
+    - Jalankan aplikasi dengan python manage.py runserver.
+    - Uji fitur untuk memastikan berfungsi tanpa error.
+
+10. **Git Push**:
+    - Lakukan git add, git commit, dan git push ke GitHub.
+    - GitHub Actions akan otomatis push ke PWS.
+
+</details>
+
+---
+
 # Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS
 
 <details>
