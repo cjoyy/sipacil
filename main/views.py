@@ -13,21 +13,32 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+
+def check_username(request):
+    username = request.GET.get('username', None)
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'exists': True})
+    else:
+        return JsonResponse({'exists': False})
 
 @csrf_exempt
 @require_POST
 def add_product_entry_ajax(request):
     product = strip_tags(request.POST.get("product"))
     description = strip_tags(request.POST.get("description"))
-    price = strip_tags(request.POST.get("price"))
-    rating = strip_tags(request.POST.get("rating"))
-    date = strip_tags(request.POST.get("date"))
-    available = strip_tags(request.POST.get("available"))
+    price = request.POST.get("price")
+    rating = request.POST.get("rating")
+    available = request.POST.get("available") == "true"
     user = request.user
 
     new_product = ProductEntry(
-        product=product, description=description,
-        price=price, rating=rating, date=date, available=available, 
+        product=product,
+        description=description,
+        price=price,
+        rating=rating,
+        available=available,
         user=user
     )
     new_product.save()
@@ -90,7 +101,11 @@ def register(request):
             form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
-    context = {'form':form}
+        else:
+            messages.error(request, 'Failed to create your account. Please correct the errors below.')
+            print(form.errors) 
+
+    context = {'form': form}
     return render(request, 'register.html', context)
 
 @login_required(login_url='/login')
