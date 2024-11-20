@@ -29,6 +29,7 @@ DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "calvin-joy-sipacil.pbp.cs.ui.ac.id"]
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://calvin-joy-sipacil.pbp.cs.ui.ac.id/", "https://calvin-joy-sipacil.pbp.cs.ui.ac.id/"]
 
 # Application definition
 
@@ -40,18 +41,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'authentication',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', #Tambahkan tepat di bawah SecurityMiddleware
-  
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'proyek_sipacil.urls'
@@ -132,4 +135,9 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://calvin-joy-sipacil.pbp.cs.ui.ac.id/", "https://calvin-joy-sipacil.pbp.cs.ui.ac.id/"]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'

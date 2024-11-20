@@ -15,6 +15,7 @@ from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+import json
 
 def check_username(request):
     username = request.GET.get('username', None)
@@ -147,3 +148,23 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = ProductEntry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_product = ProductEntry.objects.create(
+            user=request.user,
+            product=data["product"],
+            description=data["description"],
+            price=int(data["price"]),
+            rating=float(data["rating"]),
+            available=bool(data["available"]),
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
