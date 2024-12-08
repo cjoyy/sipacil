@@ -29,7 +29,7 @@ DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "calvin-joy-sipacil.pbp.cs.ui.ac.id"]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://calvin-joy-sipacil.pbp.cs.ui.ac.id/", "https://calvin-joy-sipacil.pbp.cs.ui.ac.id/"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000", "http://127.0.0.1","http://calvin-joy-sipacil.pbp.cs.ui.ac.id/", "https://calvin-joy-sipacil.pbp.cs.ui.ac.id/"]
 
 # Application definition
 
